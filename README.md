@@ -12,7 +12,7 @@
 ## Install on android (Termux)
     $ pkg install git -y
     $ pkg install php -y
-    $ git clone https://github.com/ZLaxtert/check-carrier
-    $ cd amazon-validator
+    $ git clone https://github.com/ZLaxtert/ceheck-carrier
+    $ cd ceheck-carrier
     $ php tes.php
 
