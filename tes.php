@@ -82,8 +82,14 @@ foreach ($lists as $list) {
     curl_close($ch);
     $js = json_decode($res, TRUE);
     $carrierName  = $js['data']['info']['carrier'];
+    $abbrev       = $js['data']['info']['abbrev'];
     $carrierName  = str_replace("\\","",$carrierName);
     $carrierName  = str_replace("/","",$carrierName);
+    if($carrierName == "Unknown"){
+        $carrierN = "\e[31;1m$carrierName\e[0m";
+    }else{
+        $carrierN = $carrierName;
+    }
      
      //RESPONSE
      
@@ -93,11 +99,11 @@ foreach ($lists as $list) {
      }elseif(strpos($res, '"valid":"true"')){
          $l++;
          file_put_contents("result/$carrierName.txt", $list.PHP_EOL, FILE_APPEND);
-         echo "[$no/$total] \e[32;1mLIVE\e[0m | $list => \e[32;1m$carrierName\e[0m \n";
+         echo "[$no/$total] \e[32;1mLIVE\e[0m | $list => \e[32;1m$carrierName\e[0m | \e[33;1m$abbrev\e[0m\n";
      }elseif(strpos($res, '"valid":"false"')){
          $d++;
          file_put_contents("result/die/$carrierName.txt", $list.PHP_EOL, FILE_APPEND);
-         echo "[$no/$total] \e[31;1mDIE\e[0m | $list | => \e[31;1m$carrierName\e[0m \n";
+         echo "[$no/$total] \e[31;1mDIE\e[0m | $list | => \e[34;1m$carrierN\e[0m \n";
      }elseif(strpos($res, "The server is temporarily busy, try again later!")){
          $e++;
          file_put_contents("result/error.txt", $list.PHP_EOL, FILE_APPEND);
