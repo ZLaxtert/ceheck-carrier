@@ -39,7 +39,7 @@ $date = date("l, d-m-Y");
 
 //BANNER
 
-system("clear");
+system("cls");
 echo banner();
 
 //INPUT LIST
@@ -52,6 +52,8 @@ if(empty($listname) || !file_exists($listname)) {
 	goto enterlist;
 }
 $lists = array_unique(explode("\n",str_replace("\r","",file_get_contents($listname))));
+$apikey = file_get_contents("apikey.app");
+
 
 //COUNT
 
@@ -68,7 +70,7 @@ echo "\n[+] TOTAL $total lists [+]\n\n";
 foreach ($lists as $list) {
      $no++;
      //API
-     $url = "http://api.blacknetid.com/validator/carrier/?phone=$list";
+     $url = "http://api.blacknetid.com/validator/carrier/?apikey=$apikey&phone=$list";
      
      //CURL
      
@@ -85,7 +87,10 @@ foreach ($lists as $list) {
      
      //RESPONSE
      
-     if(strpos($res, '"valid":"true"')){
+     if(strpos($res, '"carrier":"WRONG API KEY!"')){
+        $e++;
+        exit("\n\n[\e[31;1mX\e[0m] \e[33;1m!!!\e[31;1mWRONG API KEY\e[33;1m!!! \e[0m[\e[31;1mX\e[0m]\n\n\n");
+     }elseif(strpos($res, '"valid":"true"')){
          $l++;
          file_put_contents("result/$carrierName.txt", $list.PHP_EOL, FILE_APPEND);
          echo "[$no/$total] \e[32;1mLIVE\e[0m | $list => \e[32;1m$carrierName\e[0m \n";
