@@ -69,8 +69,10 @@ echo "\n[+] TOTAL $total lists [+]\n\n";
 
 foreach ($lists as $list) {
      $no++;
+     //GET PROXIES
+     $proxy = GetProxy("proxy.txt");
      //API
-     $url = "http://api.blacknetid.com/validator/carrier/?apikey=$apikey&phone=$list";
+     $url = "http://darkxcode.com/validator/carrier/tes.php?&apikey=$apikey&proxy=$proxy&phone=$list";
      
      //CURL
      
@@ -140,4 +142,10 @@ function banner(){
             ================================================
 ";
     return $banner;
+}
+function GetProxy($proxies){
+    $proxyLists  = array_unique(explode("\n",str_replace("\r","",file_get_contents($proxies))));
+    $randProxies = array_rand($proxyLists);
+    $proxy       = $randProxies[$proxyLists];
+    return $proxy;
 }
