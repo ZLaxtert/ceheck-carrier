@@ -16,5 +16,3 @@
     $ cd ceheck-carrier
     $ php tes.php
 
-## NOTE
-    If you want to run the script, please use an Indonesian IP
